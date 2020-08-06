@@ -50,10 +50,10 @@ func uploadHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) 
 		sendErrorResponse(w, http.StatusInternalServerError, "Internal Error")
 		return
 	}
-
-	ossfn := "videos/" + filename
-	path := "./videos/" + filename
-	bn := "avenssi-videos2"
+	// TODO
+	//ossfn := "videos/" + filename
+	//path := "./videos/" + filename
+	//bn := "avenssi-videos2"
 	ret := UploadToOss(ossfn, path, bn)
 	if !ret {
 		sendErrorResponse(w, http.StatusInternalServerError, "Internal Error")

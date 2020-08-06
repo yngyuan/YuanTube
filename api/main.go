@@ -18,11 +18,10 @@ func NewMiddleWareHandler(r *httprouter.Router) http.Handler {
 
 func (m middleWareHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	//check session
-	validateUserSession(r)
+	ValidateUserSession(r)
 
 	m.r.ServeHTTP(w, r)
 }
-
 
 func RegisterHandlers() *httprouter.Router {
 	router := httprouter.New()
@@ -51,6 +50,7 @@ func Prepare() {
 }
 
 func main() {
+	Prepare()
 	r := RegisterHandlers()
 	mh := NewMiddleWareHandler(r)
 	http.ListenAndServe(":8000", mh)
