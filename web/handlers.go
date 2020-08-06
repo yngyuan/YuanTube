@@ -1,7 +1,7 @@
 package main
 
 import (
-	"YuanTube/web/config"
+	"zed/config"
 	"encoding/json"
 	"github.com/julienschmidt/httprouter"
 	"html/template"

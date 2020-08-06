@@ -1,7 +1,7 @@
 package main
 
 import (
-	"YuanTube/web/config"
+	"zed/config"
 	"bytes"
 	"encoding/json"
 	"io"

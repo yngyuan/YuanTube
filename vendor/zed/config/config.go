@@ -1,8 +1,8 @@
 package config
 
 import (
-	"encoding/json"
-	"os"
+"encoding/json"
+"os"
 )
 
 type Configuration struct {
@@ -31,4 +31,5 @@ func GetLbAddr() string {
 func GetOssAddr() string {
 	return configuration.OssAddr
 }
+
 

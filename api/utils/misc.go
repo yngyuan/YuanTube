@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"YuanTube/web/config"
+	"zed/config"
 	"crypto/rand"
 	"fmt"
 	"io"

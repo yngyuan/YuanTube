@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+var tempvid string
+
 func clearTables()  {
 	dbConn.Exec("truncate users")
 	dbConn.Exec("truncate video_info")
