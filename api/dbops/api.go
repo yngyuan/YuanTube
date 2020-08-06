@@ -12,18 +12,19 @@ import(
 func AddUserCredential(loginName string, pwd string) error {
 	stmtIns, err := dbConn.Prepare("INSERT INTO users (login_name, pwd) VALUES (?, ?)")
 	if err != nil {
-		log.Printf("%s", err)
 		return err
 	}
+
 	_, err = stmtIns.Exec(loginName, pwd)
 	if err != nil {
 		return err
 	}
+
 	defer stmtIns.Close()
 	return nil
 }
 
-func GetUserCredential(loginName string) (string, error){
+func GetUserCredential(loginName string) (string, error) {
 	stmtOut, err := dbConn.Prepare("SELECT pwd FROM users WHERE login_name = ?")
 	if err != nil {
 		log.Printf("%s", err)
@@ -31,19 +32,20 @@ func GetUserCredential(loginName string) (string, error){
 	}
 
 	var pwd string
-	err = stmtOut.QueryRow(loginName).Scan((&pwd))
+	err = stmtOut.QueryRow(loginName).Scan(&pwd)
 	if err != nil && err != sql.ErrNoRows {
 		return "", err
 	}
+
 	defer stmtOut.Close()
 
 	return pwd, nil
 }
 
 func DeleteUser(loginName string, pwd string) error {
-	stmtDel, err := dbConn.Prepare("DELETE FROM users WHERE login_name = ? AND pwd = ?")
+	stmtDel, err := dbConn.Prepare("DELETE FROm users WHERE login_name=? AND pwd=?")
 	if err != nil {
-		log.Printf("%s", err)
+		log.Printf("DeleteUser error: %s", err)
 		return err
 	}
 
@@ -51,8 +53,35 @@ func DeleteUser(loginName string, pwd string) error {
 	if err != nil {
 		return err
 	}
+
 	defer stmtDel.Close()
 	return nil
+}
+
+func GetUser(loginName string) (*defs.User, error) {
+	stmtOut, err := dbConn.Prepare("SELECT id, pwd FROM users WHERE login_name = ?")
+	if err != nil {
+		log.Printf("%s", err)
+		return nil, err
+	}
+
+	var id int
+	var pwd string
+
+	err = stmtOut.QueryRow(loginName).Scan(&id, &pwd)
+	if err != nil && err != sql.ErrNoRows{
+		return nil, err
+	}
+
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+
+	res := &defs.User{Id: id, LoginName: loginName, Pwd: pwd}
+
+	defer stmtOut.Close()
+
+	return res, nil
 }
 
 func AddNewVideo(aid int, name string) (*defs.VideoInfo, error) {
@@ -202,3 +231,39 @@ func ListComments(vid string, from, to int) ([]*defs.Comment, error) {
 
 	return res, nil
 }
+
+// func ListComments(vid string, from, to int) ([]*defs.Comment, error) {
+// 	stmtOut, err := dbConn.Prepare(`SELECT comments.id, users.login_name, comments.content FROM comments
+// 		INNER JOIN users ON comments.author_id = users.id
+// 		WHERE comments.video_id = ? AND comments.time > FROM_UNIXTIME(?) AND comments.time <= FROM_UNIXTIME(?)
+// 		ORDER BY comments.time DESC`)
+
+// 	var res []*defs.Comment
+
+// 	rows, err := stmtOut.Query(vid, from, to)
+// 	if err != nil {
+// 		log.Printf("%s", err)
+// 		return res, err
+// 	}
+
+// 	for rows.Next() {
+// 		var id, name, content string
+// 		if err := rows.Scan(&id, &name, &content); err != nil {
+// 			return res, err
+// 		}
+
+// 		c := &defs.Comment{Id: id, VideoId: vid, Author: name, Content: content}
+// 		res = append(res, c)
+// 	}
+
+// 	defer stmtOut.Close()
+
+// 	return res, nil
+// }
+
+
+
+
+
+
+

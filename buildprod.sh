@@ -2,14 +2,14 @@
 
 # Build web and other services
 
-cd ~/work/src/github.com/avenssi/video_server/api
+cd ~/go/src/YuanTube/api
 env GOOS=linux GOARCH=amd64 go build -o ../bin/api
 
-cd ~/work/src/github.com/avenssi/video_server/scheduler
+cd ~/go/src/YuanTube/scheduler
 env GOOS=linux GOARCH=amd64 go build -o ../bin/scheduler
 
-cd ~/work/src/github.com/avenssi/video_server/streamserver
-env GOOS=linux GOARCH=amd64 go build -o ../bin/streamserver
+cd ~/go/src/YuanTube/stream
+env GOOS=linux GOARCH=amd64 go build -o ../bin/stream
 
-cd ~/work/src/github.com/avenssi/video_server/web
+cd ~/go/src/YuanTube/web
 env GOOS=linux GOARCH=amd64 go build -o ../bin/web

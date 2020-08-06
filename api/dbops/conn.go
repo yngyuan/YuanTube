@@ -12,7 +12,7 @@ var (
 
 func init()  {
 	dbConn, err = sql.Open("mysql",
-		"root:123456789o!@#@tcp(localhost:3308)/video?charset=utf8")
+		"root:yy9826!@#@tcp(127.0.0.1:3306)/video_server?charset=utf8")
 	if err != nil {
 		panic(err.Error())
 	}
